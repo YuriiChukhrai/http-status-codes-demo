@@ -21,7 +21,7 @@
 		<developer>
 			<id>limit</id>
 			<name>Yurii Chukhrai</name>
-			<email>chuhray.uriy@gmail.com</email>
+			<email>yurii.chukhrai@outlook.com</email>
 		</developer>
 	</developers>
 
@@ -111,11 +111,6 @@
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>com.fasterxml.jackson.datatype</groupId>-->
-<!--			<artifactId>jackson-datatype-jsr310</artifactId>-->
-<!--		</dependency>-->
-
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
@@ -164,13 +159,6 @@
 			<scope>test</scope>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>io.qameta.allure</groupId>-->
-<!--			<artifactId>allure-junit5</artifactId>-->
-<!--			<version>${allure.version}</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
 		<dependency>
 			<groupId>io.qameta.allure</groupId>
 			<artifactId>allure-rest-assured</artifactId>
@@ -198,9 +186,6 @@
 <!--			<scope>test</scope>-->
 <!--		</dependency>-->
 
-
-
-
 	</dependencies>
 
 	<build>
@@ -227,9 +212,6 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven.surefire.version}</version>
 				<configuration>
-<!--					<includes>-->
-<!--						<include>**/test/**.java</include>-->
-<!--					</includes>-->
 					<suiteXmlFiles>
 						<suiteXmlFile>src/test/resources/testng/tests.xml</suiteXmlFile>
 					</suiteXmlFiles>

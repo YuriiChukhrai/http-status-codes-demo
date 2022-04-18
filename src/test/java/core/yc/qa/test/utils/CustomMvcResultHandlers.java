@@ -18,7 +18,7 @@ public abstract class CustomMvcResultHandlers  {
 
     /**
      * @info implement Allure attachment {@link io.qameta.allure.Attachment} for Allure report. <br/>
-     * This approach preferred if you have more than 3 TC's. <br/>
+     * This approach preferred if you have more than 3 TC's :). The very important requirement for debugging/investigation - it's to have all possible context (in out example of HTTP request information)<br/>
      * Like alternative, for console debugging, you can use {@code mvc.andDo(print())} to print the result info to console.
      *
      * */

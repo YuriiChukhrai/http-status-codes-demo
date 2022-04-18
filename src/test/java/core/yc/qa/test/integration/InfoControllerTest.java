@@ -14,6 +14,9 @@ import org.springframework.web.context.WebApplicationContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -57,14 +60,14 @@ public class InfoControllerTest extends AbstractTestNGSpringContextTests {
                 .andDo(CustomMvcResultHandlers.allureAttachment())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.application", is(appNameExpected)))
+                .andExpect(jsonPath("$.app-name", is(appNameExpected)))
                 .andExpect(jsonPath("$.app-version", is(appVersionExpected)))
-                .andExpect(jsonPath("$.http-codes", is(appCodeSizeExpected)))
+                .andExpect(jsonPath("$.http-codes-size", is(appCodeSizeExpected)))
 
                 .andExpect(jsonPath("$.dev", is(appDev)))
                 .andExpect(jsonPath("$.e-mail", is(devEmail)))
-                .andExpect(jsonPath("$.git-hub", is(githubLink)))
-                .andExpect(jsonPath("$.linkedin", is(linkedinLink)));
+                .andExpect(jsonPath("$.git-hub-url", is(githubLink)))
+                .andExpect(jsonPath("$.linkedin-url", is(linkedinLink)));
     }
 
     @Test
@@ -76,13 +79,13 @@ public class InfoControllerTest extends AbstractTestNGSpringContextTests {
                 .andDo(CustomMvcResultHandlers.allureAttachment())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(xpath("//application").string(appNameExpected))
+                .andExpect(xpath("//app-name").string(appNameExpected))
                 .andExpect(xpath("//app-version").string(appVersionExpected))
-                .andExpect(xpath("//http-codes").string(String.valueOf(appCodeSizeExpected)))
+                .andExpect(xpath("//http-codes-size").string(String.valueOf(appCodeSizeExpected)))
 
                 .andExpect(xpath("//dev").string(appDev))
                 .andExpect(xpath("//e-mail").string(devEmail))
-                .andExpect(xpath("//git-hub").string(githubLink))
-                .andExpect(xpath("//linkedin").string(linkedinLink));
+                .andExpect(xpath("//git-hub-url").string(githubLink))
+                .andExpect(xpath("//linkedin-url").string(linkedinLink));
     }
 }

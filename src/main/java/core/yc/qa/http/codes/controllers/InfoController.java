@@ -45,7 +45,7 @@ public class InfoController {
         map.put("e-mail", "chuhray.uriy@gmail.com");
         map.put("git-hub-url", "https://github.com/YuriiChukhrai");
 
-        map.put("linked-in-url", "https://www.linkedin.com/in/yurii-c-b55aa6174");
+        map.put("linkedin-url", "https://www.linkedin.com/in/yurii-c-b55aa6174");
 
         return map;
     }

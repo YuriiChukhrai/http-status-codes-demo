@@ -56,6 +56,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
 
     @DataProvider(parallel = true)
     public Iterator<Long> getHttpCodeByIdDataProvider() {
+        //Generate ID's sequence (from 1 to 66)
         return Stream.iterate(1L, i -> i + 1).limit(66).collect(Collectors.toList()).iterator();
     }
 
@@ -106,6 +107,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
         this.mvc.perform(get(httpCodeControllerEndpointPath + String.format("/%s", id))
                         .accept(MediaType.APPLICATION_XML_VALUE)
                         .contentType(MediaType.APPLICATION_XML_VALUE))
+
                 /*
                  * OR you can use:
                  * import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -137,6 +139,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
         mvc.perform(get(httpCodeControllerEndpointPath + "/info/all")
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
+
                 /*
                  * OR you can use:
                  * import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -146,10 +149,14 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.*", hasSize(66)))
-                .andExpect(jsonPath("$").isArray());
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[*].id", notNullValue()))
+                .andExpect(jsonPath("$[*].category", notNullValue() ))
+                .andExpect(jsonPath("$[*].code", notNullValue() ))
+                .andExpect(jsonPath("$[*].reason_phrase", notNullValue() ))
+                .andExpect(jsonPath("$[*].definition", notNullValue() ));
     }
 
-    //TODO
     @Features({@Feature(TestGroups.INTEGRATION), @Feature("XML"), @Feature("getAllHttpCodes")})
     @Issues({@Issue("GA-001"), @Issue("GTA-002")})
     @Stories({@Story("Stories: CIR-001"), @Story("Stories: CIR-002")})
@@ -159,29 +166,25 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
-    @Test(enabled = false, groups = TestGroups.INTEGRATION)
+    @Test(enabled = true, groups = TestGroups.INTEGRATION)
     public void getAllHttpCodesXmlTest() throws Exception {
 
         mvc.perform(get(httpCodeControllerEndpointPath + "/info/all")
                         .accept(MediaType.APPLICATION_XML_VALUE)
                         .contentType(MediaType.APPLICATION_XML_VALUE))
+
                 /*
                  * OR you can use: .andDo(print()) to printout the mvc results to console
                  * */
                 .andDo(CustomMvcResultHandlers.allureAttachment())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_XML_VALUE))
-                //.andExpect(xpath("//definition").string(notNullValue()))
-                //.andExpect(jsonPath("$.*", hasSize(66)))
-                //.andExpect(jsonPath("$").isArray())
-
-                /*
-                 * OR you can use: .andDo(print()) to printout the mvc results to console
-                 * */
-
-
-        //.andExpect(xpath("//definition").string(notNullValue()))
-        ;
+                .andExpect(xpath(".//item").nodeCount(66) )
+                .andExpect(xpath(".//item[*]/id").string(notNullValue()) )
+                .andExpect(xpath(".//item[*]/category").string(notNullValue()) )
+                .andExpect(xpath(".//item[*]/code").string(notNullValue()) )
+                .andExpect(xpath(".//item[*]/reason_phrase").string(notNullValue()) )
+                .andExpect(xpath(".//item[*]/definition").string(notNullValue()) );
     }
 
     @DataProvider(parallel = true)
@@ -210,6 +213,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
         mvc.perform(get(httpCodeControllerEndpointPath + "/info").param(QueryParams.CODE, expectedResponse.getCode().toString())
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
+
                 /*
                  * OR you can use:
                  * import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -241,6 +245,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
         mvc.perform(get(httpCodeControllerEndpointPath + "/info").param(QueryParams.CODE, expectedResponse.getCode().toString())
                         .accept(MediaType.APPLICATION_XML_VALUE)
                         .contentType(MediaType.APPLICATION_XML_VALUE))
+
                 /*
                  * OR you can use:
                  * import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -272,6 +277,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
         mvc.perform(get(httpCodeControllerEndpointPath + "/info").param(QueryParams.CATEGORY, expectedResponse.getCategory())
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
+
                 /*
                  * OR you can use:
                  * import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -290,7 +296,6 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
                 .andExpect(jsonPath("$[*].definition", hasItem(is(expectedResponse.getDefinition())) ));
     }
 
-    //TODO
     @Features({@Feature(TestGroups.INTEGRATION), @Feature("XML"), @Feature("findHttpCodesByCategory")})
     @Issues({@Issue("GA-001"), @Issue("GTA-002")})
     @Stories({@Story("Stories: CIR-001"), @Story("Stories: CIR-002")})
@@ -306,6 +311,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
         mvc.perform(get(httpCodeControllerEndpointPath + "/info").param(QueryParams.CATEGORY, expectedResponse.getCategory())
                         .accept(MediaType.APPLICATION_XML_VALUE)
                         .contentType(MediaType.APPLICATION_XML_VALUE))
+
                 /*
                  * OR you can use:
                  * import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -314,18 +320,13 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
                 .andDo(CustomMvcResultHandlers.allureAttachment())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(xpath("//*").nodeCount(is(not(0))))
-                .andExpect(xpath("//id").string( notNullValue() ))
-                //.andExpect(xpath("//category").node() ))
-
-//                .andExpect(jsonPath("$[*].category", hasItem(is(expectedResponse.getCategory())) ))
-//                .andExpect(jsonPath("$[*].code", hasItem(is(expectedResponse.getCode())) ))
-//                .andExpect(jsonPath("$[*].reason_phrase", hasItem(is(expectedResponse.getReason_phrase())) ))
-//                .andExpect(jsonPath("$[*].definition", hasItem(is(expectedResponse.getDefinition())) ))
-
-        ;
+                .andExpect(xpath(".//item").nodeCount(is(not(0))) )
+                .andExpect(xpath(".//item[*]/id").string(notNullValue()) )
+                .andExpect(xpath(".//item[*]/category").string(is(expectedResponse.getCategory())) )
+                .andExpect(xpath(".//item[*]/code").string(is(expectedResponse.getCode().toString())) )
+                .andExpect(xpath(".//item[*]/reason_phrase").string(is(expectedResponse.getReason_phrase())) )
+                .andExpect(xpath(".//item[*]/definition").string(is(expectedResponse.getDefinition())) );
     }
-
 
     @Features({@Feature(TestGroups.INTEGRATION), @Feature("JSON"), @Feature("findHttpCodeByReasonPhrase")})
     @Issues({@Issue("GA-001"), @Issue("GTA-002")})
@@ -342,6 +343,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
         mvc.perform(get(httpCodeControllerEndpointPath + "/info").param(QueryParams.REASON_PHRASE, expectedResponse.getReason_phrase())
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
+                
                 /*
                  * OR you can use:
                  * import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -373,6 +375,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
         mvc.perform(get(httpCodeControllerEndpointPath + "/info").param(QueryParams.REASON_PHRASE, expectedResponse.getReason_phrase())
                         .accept(MediaType.APPLICATION_XML_VALUE)
                         .contentType(MediaType.APPLICATION_XML_VALUE))
+
                 /*
                  * OR you can use:
                  * import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -457,6 +460,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
                         .accept(MediaType.APPLICATION_XML_VALUE)
                         .contentType(MediaType.APPLICATION_XML_VALUE)
                         .content(fooHttpCodeXmlString))
+
                 /*
                  * OR you can use:
                  * import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -584,8 +588,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
 
         mvc.perform(delete(httpCodeControllerEndpointPath + "/" + fooHttpCodeJson.getId() )
                         .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                )
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
 
                 /*
                  * OR you can use:
@@ -610,8 +613,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
 
         mvc.perform(delete(httpCodeControllerEndpointPath + "/" + fooHttpCodeXml.getId() )
                         .accept(MediaType.APPLICATION_XML_VALUE)
-                        .contentType(MediaType.APPLICATION_XML_VALUE)
-                )
+                        .contentType(MediaType.APPLICATION_XML_VALUE))
 
                 /*
                  * OR you can use:
