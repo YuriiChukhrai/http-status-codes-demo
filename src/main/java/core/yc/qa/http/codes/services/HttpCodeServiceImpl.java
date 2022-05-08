@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 @Service
 public class HttpCodeServiceImpl implements HttpCodeService {
 
+    private static final int HARDCODED_LIMITATION = 66;
+
     @Autowired
     HttpCodeRepository httpCodeRepository;
 
@@ -81,7 +83,10 @@ public class HttpCodeServiceImpl implements HttpCodeService {
 
     @Override
     public void delete(Long id) {
-        if (id > 0) {
+        /*
+         * The limitation [&& id > HARDCODED_LIMITATION] putted to protect correct HttpCode entities in DB
+         * */
+        if (id > 0 && id > HARDCODED_LIMITATION) {
             httpCodeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(HttpCode.class, QueryParams.ID));
             httpCodeRepository.deleteById(id);
             return;
@@ -92,7 +97,10 @@ public class HttpCodeServiceImpl implements HttpCodeService {
     @Override
     public HttpCode put(HttpCode newHttpCode, Long id) {
 
-        if (id > 0) {
+        /*
+         * The limitation [&& id > HARDCODED_LIMITATION] putted to protect correct HttpCode entities in DB
+         * */
+        if (id > 0 && id > HARDCODED_LIMITATION) {
             return httpCodeRepository.findById(id).map(httpCode -> {
 
                 httpCode.setCode(newHttpCode.getCode());
