@@ -35,7 +35,7 @@ public class HttpCodeCustomRepositoryImpl implements HttpCodeCustomRepository {
     EntityManager entityManager;
 
     @Override
-    public Optional<HttpCode> findHttpCodeByCode(Integer code) {
+    public Optional<HttpCode> findHttpCodeByCode(int code) {
         final String baseSql = "SELECT hc.* FROM http_code as hc WHERE hc.code = :code";
 
         final Query query = entityManager.createNativeQuery(baseSql, HttpCode.class);

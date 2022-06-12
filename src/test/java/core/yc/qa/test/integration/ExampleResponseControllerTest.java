@@ -4,12 +4,11 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import core.yc.qa.HttpStatusCodesApplication;
 import core.yc.qa.http.codes.entity.HttpCode;
 import core.yc.qa.test.TestGroups;
-import core.yc.qa.test.utils.BaseUtils;
+import core.yc.qa.test.utils.BaseTestUtils;
 import core.yc.qa.test.utils.CustomMvcResultHandlers;
 import io.qameta.allure.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,6 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * @author limit (Yurii Chukhrai)
+ *
+ * Controller layer unit tests
  */
 
 @SpringBootTest(classes = HttpStatusCodesApplication.class)
@@ -106,7 +107,7 @@ public class ExampleResponseControllerTest extends AbstractTestNGSpringContextTe
     public void getHttpCodeByIdXmlTest(HttpCode expectedResponse) throws Exception {
 
         final String fooHttpCodeXmlString = new XmlMapper().writeValueAsString(expectedResponse);
-        BaseUtils.attachText("Request Body.", fooHttpCodeXmlString);
+        BaseTestUtils.attachText("Request Body.", fooHttpCodeXmlString);
         mvc.perform(get(exampleResponseControllerEndpointPath + String.format("/%s", expectedResponse.getCode() )).accept(MediaType.APPLICATION_XML_VALUE))
 
                 /*

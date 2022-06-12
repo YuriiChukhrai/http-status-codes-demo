@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import core.yc.qa.http.codes.validation.ValidHttpCode;
 import lombok.Data;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ import javax.validation.constraints.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @Accessors(chain = true)
+@ToString
 public final class HttpCode {
 
     @Id

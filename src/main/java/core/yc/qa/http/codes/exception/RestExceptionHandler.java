@@ -3,6 +3,7 @@ package core.yc.qa.http.codes.exception;
 import core.yc.qa.http.codes.exception.model.EntityExistException;
 import core.yc.qa.http.codes.exception.model.EntityNotFoundException;
 import core.yc.qa.http.codes.exception.model.IllegalRequestException;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.springframework.core.Ordered;
@@ -27,15 +28,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-/**
- *
- * @author limit (Yurii Chukhrai)
- */
-
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
+@Slf4j
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(RestExceptionHandler.class);
 
     /**
      * Handle MissingServletRequestParameterException. Triggered when a 'required' request parameter is missing.

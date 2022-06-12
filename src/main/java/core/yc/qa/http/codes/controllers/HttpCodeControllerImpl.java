@@ -25,7 +25,7 @@ public class HttpCodeControllerImpl implements HttpCodeController {
 
     @Override
     @GetMapping(value = {"/info"}, params = QueryParams.CODE, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public HttpCode getHttpCodeByCode(@NotNull @RequestParam(value = QueryParams.CODE, required = true) Integer code) {
+    public HttpCode getHttpCodeByCode(@NotNull @RequestParam(value = QueryParams.CODE, required = true) int code) {
 
         return httpCodeService.findHttpCodeByCode(code);
     }
@@ -54,7 +54,7 @@ public class HttpCodeControllerImpl implements HttpCodeController {
 
     @Override
     @GetMapping(value = {"/{id}"}, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public HttpCode getHttpCodeById(@NotNull @PathVariable Long id) {
+    public HttpCode getHttpCodeById(@NotNull @PathVariable long id) {
 
         return httpCodeService.findHttpCodeById(id);
     }
@@ -67,28 +67,28 @@ public class HttpCodeControllerImpl implements HttpCodeController {
 
     @Override
     @PutMapping(value = {"/{id}"}, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public HttpCode putHttpCode(@NotNull @RequestBody HttpCode newHttpCode, @NotNull @PathVariable Long id) {
+    public HttpCode putHttpCode(@NotNull @RequestBody HttpCode newHttpCode, @NotNull @PathVariable long id) {
 
         return httpCodeService.put(newHttpCode, id);
     }
 
     @Override
     @DeleteMapping(value = {"/{id}"}, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public void deleteHttpCode(@NotNull @PathVariable Long id) {
+    public void deleteHttpCode(@NotNull @PathVariable long id) {
         httpCodeService.delete(id);
     }
 }
 
 //To keep contract for REST controller clear
 interface HttpCodeController {
-    HttpCode getHttpCodeByCode(Integer code);
-    HttpCode getHttpCodeById(Long id);
+    HttpCode getHttpCodeByCode(int code);
+    HttpCode getHttpCodeById(long id);
     List<HttpCode> findHttpCodesByCategory(String category);
 
     List<HttpCode> getAllHttpCodes();
     HttpCode findHttpCodeByReasonPhrase(String reasonPhrase);
     HttpCode saveHttpCode(HttpCode newHttpCode);
 
-    HttpCode putHttpCode(HttpCode newHttpCode, Long id);
-    void deleteHttpCode(Long id);
+    HttpCode putHttpCode(HttpCode newHttpCode, long id);
+    void deleteHttpCode(long id);
 }

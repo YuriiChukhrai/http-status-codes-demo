@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public interface HttpCodeCustomRepository {
 
-    Optional<HttpCode> findHttpCodeByCode(Integer code);
+    Optional<HttpCode> findHttpCodeByCode(int code);
     Stream<HttpCode> findHttpCodesByCategory(String category);
     Optional<HttpCode> findHttpCodeByReasonPhrase(String reasonPhrase);
 }

@@ -3,29 +3,21 @@ package core.yc.qa.http.codes.exception;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import core.yc.qa.http.codes.exception.model.LowerCaseClassNameResolver;
-
-/**
- *
- * @author limit (Yurii Chukhrai)
- */
+import lombok.*;
 
 @JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.CUSTOM, property = "error", visible = true)
 @JsonTypeIdResolver(LowerCaseClassNameResolver.class)
+@Data
+@EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class ApiValidationError extends ApiSubError {
+
+    @NonNull
     private String object;
     private String field;
     private Object rejectedValue;
+
+    @NonNull
     private String message;
-
-    ApiValidationError(String object, String message) {
-        this.object = object;
-        this.message = message;
-    }
-
-    ApiValidationError(String object, String field, Object rejectedValue, String message){
-        this.object = object;
-        this.message = message;
-        this.field = field;
-        this.rejectedValue = rejectedValue;
-    }
 }

@@ -10,7 +10,6 @@ import java.util.stream.IntStream;
  *
  * @author limit (Yurii Chukhrai)
  */
-
 public class EntityExistException extends RuntimeException {
 
     public EntityExistException(Class clazz, String... searchParamsMap) {

@@ -33,7 +33,7 @@ public abstract class CustomMvcResultHandlers  {
             StringWriter stringWriter = new StringWriter();
             ResultHandler printingResultHandler = new CustomMvcResultHandlers.PrintWriterPrintingResultHandler(new PrintWriter(stringWriter));
                 printingResultHandler.handle(result);
-            BaseUtils.attachText("MvcResult", stringWriter.toString());
+            BaseTestUtils.attachText("MvcResult", stringWriter.toString());
         }
     }
 

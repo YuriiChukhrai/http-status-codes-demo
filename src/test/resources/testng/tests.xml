@@ -6,10 +6,22 @@
 
     <test name="Integration (E2E)">
         <classes>
-            <class name="core.yc.qa.test.integration.InfoControllerTest" />
-            <class name="core.yc.qa.test.integration.HttpCodeControllerTest" />
-            <class name="core.yc.qa.test.integration.ExampleResponseControllerTest" />
+            <class name="core.yc.qa.test.integration.InfoControllerTest"/>
+            <class name="core.yc.qa.test.integration.HttpCodeControllerTest"/>
+            <class name="core.yc.qa.test.integration.ExampleResponseControllerTest"/>
         </classes>
     </test>
 
+    <test name="Integration (Mock+MVC)">
+        <classes>
+            <class name="core.yc.qa.test.integration.mock.InfoControllerTest"/>
+        </classes>
+    </test>
+
+    <test name="Integration (Mock)">
+        <classes>
+            <class name="core.yc.qa.test.integration.mock.HttpCodeServiceImplTest"/>
+        </classes>
+    </test>
+    
 </suite>

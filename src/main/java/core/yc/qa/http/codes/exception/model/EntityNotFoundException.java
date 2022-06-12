@@ -6,11 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-/**
- *
- * @author limit (Yurii Chukhrai)
- */
-
 public class EntityNotFoundException extends RuntimeException {
 
     public EntityNotFoundException(Class clazz, String... searchParamsMap) {

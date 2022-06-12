@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface HttpCodeService {
 
-    HttpCode findHttpCodeByCode(Integer code);
-    HttpCode findHttpCodeById(Long id);
+    HttpCode findHttpCodeByCode(int code);
+    HttpCode findHttpCodeById(long id);
 
     List<HttpCode> findHttpCodesByCategory(String category);
     HttpCode findHttpCodeByReasonPhrase(String reasonPhrase);
@@ -19,7 +19,7 @@ public interface HttpCodeService {
 
     long getHttpCodesSize();
     HttpCode save(HttpCode newHttpCode);
-    void delete(Long id);
+    void delete(long id);
 
-    HttpCode put(HttpCode newHttpCode, Long id);
+    HttpCode put(HttpCode newHttpCode, long id);
 }

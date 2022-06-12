@@ -6,7 +6,7 @@ import core.yc.qa.HttpStatusCodesApplication;
 import core.yc.qa.http.codes.entity.HttpCode;
 import core.yc.qa.http.codes.util.QueryParams;
 import core.yc.qa.test.TestGroups;
-import core.yc.qa.test.utils.BaseUtils;
+import core.yc.qa.test.utils.BaseTestUtils;
 import core.yc.qa.test.utils.CustomMvcResultHandlers;
 import io.qameta.allure.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * @author limit (Yurii Chukhrai)
+ *
+ * Controller layer unit tests
  */
 
 @SpringBootTest(classes = HttpStatusCodesApplication.class)
@@ -405,7 +407,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     public void saveHttpCodeJsonTest() throws Exception {
 
         final String fooHttpCodeJsonString = new ObjectMapper().writeValueAsString(fooHttpCodeJson);
-        BaseUtils.attachText("Request Body.", fooHttpCodeJsonString);
+        BaseTestUtils.attachText("Request Body.", fooHttpCodeJsonString);
 
         final String responseBody = mvc.perform(post(httpCodeControllerEndpointPath )
                         .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -432,7 +434,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
                 * */
                 .andReturn().getResponse().getContentAsString();
 
-        BaseUtils.attachText("Response.", responseBody);
+        BaseTestUtils.attachText("Response.", responseBody);
 
         final HttpCode responseHttpCode = new ObjectMapper().readValue(responseBody, HttpCode.class);
         /*
@@ -454,7 +456,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     public void saveHttpCodeXmlTest() throws Exception {
 
         final String fooHttpCodeXmlString = new XmlMapper().writeValueAsString(fooHttpCodeXml);
-        BaseUtils.attachText("Request Body.", fooHttpCodeXmlString);
+        BaseTestUtils.attachText("Request Body.", fooHttpCodeXmlString);
 
         final String responseBody = mvc.perform(post(httpCodeControllerEndpointPath )
                         .accept(MediaType.APPLICATION_XML_VALUE)
@@ -481,7 +483,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
                  * */
                 .andReturn().getResponse().getContentAsString();
 
-        BaseUtils.attachText("Response.", responseBody);
+        BaseTestUtils.attachText("Response.", responseBody);
 
         final HttpCode responseHttpCode = new XmlMapper().readValue(responseBody, HttpCode.class);//new GsonBuilder().create().fromJson(responseBody, HttpCode.class);
         /*
@@ -503,7 +505,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     public void putHttpCodeJsonTest() throws Exception {
 
         final String fooHttpCodeJsonString = new ObjectMapper().writeValueAsString(fooHttpCodeJson.setDefinition("Call PUT"));
-        BaseUtils.attachText("Request Body.", fooHttpCodeJsonString);
+        BaseTestUtils.attachText("Request Body.", fooHttpCodeJsonString);
 
         mvc.perform(put(httpCodeControllerEndpointPath + "/" + fooHttpCodeJson.getId())
                         .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -545,7 +547,7 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     public void putHttpCodeXmlTest() throws Exception {
 
         final String fooHttpCodeXmlString = new XmlMapper().writeValueAsString(fooHttpCodeXml.setDefinition("Call PUT"));
-        BaseUtils.attachText("Request Body.", fooHttpCodeXmlString);
+        BaseTestUtils.attachText("Request Body.", fooHttpCodeXmlString);
 
         mvc.perform(put(httpCodeControllerEndpointPath + "/" + fooHttpCodeXml.getId())
                         .accept(MediaType.APPLICATION_XML_VALUE)
