@@ -17,10 +17,10 @@ import javax.validation.constraints.NotNull;
  */
 @RestController
 @RequestMapping("/api/v1/http/code/example")
-public class ExampleResponseController {
+class ExampleResponseController {
 
     @Autowired
-    HttpCodeService httpCodeService;
+    private HttpCodeService httpCodeService;
 
     @RequestMapping(value = {"/{code}"}, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }, method = RequestMethod.GET)
     public ResponseEntity<HttpCode> getResponseEntityById(@NotNull @PathVariable Integer code) {

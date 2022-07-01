@@ -25,7 +25,7 @@ public class HttpCodeServiceImpl implements HttpCodeService {
     private static final int HARDCODED_LIMITATION = 66;
 
     @Autowired
-    HttpCodeRepository httpCodeRepository;
+    private HttpCodeRepository httpCodeRepository;
 
     @Override
     public HttpCode findHttpCodeByCode(final int code) {

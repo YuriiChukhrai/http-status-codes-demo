@@ -31,8 +31,25 @@ public class HttpCodeCustomRepositoryImpl implements HttpCodeCustomRepository {
     * ```
     * */
 
+
+    /**
+     * All magic for JPA/JDBC will do Hibernate + Spring. good for us :)
+     *
+     *
+     * Properties:
+     * spring.jpa.database-platform=
+     * spring.jpa.hibernate.ddl-auto=
+     * spring.jpa.hibernate.show-sql=
+     * spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=
+     *
+     * spring.datasource.url=
+     * spring.datasource.driverClassName=
+     * spring.datasource.username=
+     * spring.datasource.password=
+     *
+     * */
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public Optional<HttpCode> findHttpCodeByCode(int code) {

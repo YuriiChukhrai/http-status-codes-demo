@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="HTTP status code. Demo." parallel="tests"
+       thread-count="1" data-provider-thread-count="1">
+
+    <test name="Integration (E2E)">
+        <classes>
+            <class name="core.yc.qa.test.e2e.InfoControllerTest"/>
+        </classes>
+    </test>
+
+</suite>

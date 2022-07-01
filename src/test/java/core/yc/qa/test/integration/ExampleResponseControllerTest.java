@@ -20,7 +20,6 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.springframework.core.io.buffer.DataBufferUtils.matcher;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;

@@ -22,13 +22,13 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/info")
-public class InfoController {
+class InfoController {
 
     @Value("${app.version}")
     private String appVersion;
 
     @Autowired
-    HttpCodeService httpCodeService;
+    private HttpCodeService httpCodeService;
 
     @RequestMapping("/")
     @ResponseStatus(HttpStatus.OK)

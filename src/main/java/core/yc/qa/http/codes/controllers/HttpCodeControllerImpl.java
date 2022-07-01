@@ -18,10 +18,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/http/code")
-public class HttpCodeControllerImpl implements HttpCodeController {
+class HttpCodeControllerImpl implements HttpCodeController {
 
     @Autowired
-    HttpCodeService httpCodeService;
+    private HttpCodeService httpCodeService;
 
     @Override
     @GetMapping(value = {"/info"}, params = QueryParams.CODE, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })

@@ -23,5 +23,5 @@
             <class name="core.yc.qa.test.integration.mock.HttpCodeServiceImplTest"/>
         </classes>
     </test>
-    
+
 </suite>
