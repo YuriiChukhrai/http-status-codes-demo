@@ -1,7 +1,9 @@
 package core.yc.qa.test.integration;
 
 import core.yc.qa.HttpStatusCodesApplication;
+import core.yc.qa.test.TestGroups;
 import core.yc.qa.test.utils.CustomMvcResultHandlers;
+import io.qameta.allure.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,7 +36,7 @@ public class InfoControllerTest extends AbstractTestNGSpringContextTests {
 
     private MockMvc mvc;
 
-   @BeforeClass
+    @BeforeClass
     public void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
@@ -49,7 +51,15 @@ public class InfoControllerTest extends AbstractTestNGSpringContextTests {
     private final String linkedinLink = "https://www.linkedin.com/in/yurii-c-b55aa6174";
     private final String endpointPath = "/api/v1/info/";
 
-    @Test
+    @Features({@Feature(TestGroups.INTEGRATION), @Feature(TestGroups.MOCK), @Feature(TestGroups.MVC)})
+    @Issues({@Issue("GA-001"), @Issue("GTA-002")})
+    @Stories({@Story("Stories: CIR-001"), @Story("Stories: CIR-002")})
+    @Epics({@Epic("Epic01"), @Epic("Epic02")})
+    @TmsLinks({@TmsLink("025"), @TmsLink("026")})
+    @Links({@Link(url = "https://github.com/YuriiChukhrai/http-status-codes-demo/", name = "GitHub repository"), @Link(url = "https://www.linkedin.com/in/yurii-c-b55aa6174/", name = "LinkedIn")})
+    @Severity(SeverityLevel.TRIVIAL)
+    @Owner("Yurii Chukhrai")
+    @Test(groups = {TestGroups.INTEGRATION, TestGroups.MOCK, TestGroups.MVC})
     public void getGeneralInformationTestJson() throws Exception {
 
         mvc.perform(get(endpointPath).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -69,7 +79,15 @@ public class InfoControllerTest extends AbstractTestNGSpringContextTests {
                 .andExpect(jsonPath("$.linkedin-url", is(linkedinLink)));
     }
 
-    @Test
+    @Features({@Feature(TestGroups.INTEGRATION), @Feature(TestGroups.MOCK), @Feature(TestGroups.MVC)})
+    @Issues({@Issue("GA-001"), @Issue("GTA-002")})
+    @Stories({@Story("Stories: CIR-001"), @Story("Stories: CIR-002")})
+    @Epics({@Epic("Epic01"), @Epic("Epic02")})
+    @TmsLinks({@TmsLink("025"), @TmsLink("026")})
+    @Links({@Link(url = "https://github.com/YuriiChukhrai/http-status-codes-demo/", name = "GitHub repository"), @Link(url = "https://www.linkedin.com/in/yurii-c-b55aa6174/", name = "LinkedIn")})
+    @Severity(SeverityLevel.TRIVIAL)
+    @Owner("Yurii Chukhrai")
+    @Test(groups = {TestGroups.INTEGRATION, TestGroups.MOCK, TestGroups.MVC})
     public void getGeneralInformationTestXml() throws Exception {
         mvc.perform(get(endpointPath).accept(MediaType.APPLICATION_XML_VALUE).contentType(MediaType.APPLICATION_XML_VALUE))
                 /*

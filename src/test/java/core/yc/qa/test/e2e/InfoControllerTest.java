@@ -1,10 +1,14 @@
 package core.yc.qa.test.e2e;
 
+import core.yc.qa.HttpStatusCodesApplication;
+import core.yc.qa.test.TestGroups;
 import io.qameta.allure.*;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
+import org.springframework.boot.SpringApplication;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.*;
@@ -27,12 +31,22 @@ public final class InfoControllerTest extends BaseTest {
     private final String linkedinLink = "https://www.linkedin.com/in/yurii-c-b55aa6174";
     private final String endpointPath = "/api/v1/info/";
 
+
+/**
+ * Demo. Bring up the Spring Boot app on build in Tomcat server.
+ */
+    @BeforeSuite(alwaysRun = true)
+    public static void beforeTestSuite(){
+        SpringApplication.run(HttpStatusCodesApplication.class);
+    }
+
+
     @Epic("Epic-001")
     @Severity(SeverityLevel.NORMAL)
     @Features( {@Feature("JSON"), @Feature("Rest-Assured") })
     @TmsLink("0001")
     @Description("Get general information about application")
-    @Test
+    @Test(groups = {TestGroups.INTEGRATION, TestGroups.E2E})
     public void getGeneralInformationJsonTest() {
 
                 RestAssured.given()
@@ -64,7 +78,7 @@ public final class InfoControllerTest extends BaseTest {
     @Features( {@Feature("XML"), @Feature("Rest-Assured") })
     @TmsLink("0002")
     @Description("Get general information about application")
-    @Test
+    @Test(groups = {TestGroups.INTEGRATION, TestGroups.E2E})
     public void getGeneralInformationXmlTest() {
 
         RestAssured.given()
