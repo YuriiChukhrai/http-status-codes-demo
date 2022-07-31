@@ -1,36 +1,26 @@
 **Table of Contents**
 
-## Run Spring App.
-`$> mvn spring-boot:run`
-
-## Run tests
-`$> mvn clean -T3 verify -Dtest.suite=before_artifact` - it's start to execute unit test suite, before the building of application artifact. And generate Allure report log's</br>
-`$> mvn clean -T3 verify -Dtest.suite=after_artifact` - it's </br>
 
 
-## Reports
-`$> mvn allure:report`
+# Intro
 
-## Endpoints
+{TBD}
 
-```shell
-$> mvn allure:report
-```
-
-# Diagram
+## The diagram of handling request
 
 ```mermaid
   graph LR;
-      HTTP-request#1--GET-->Dispatcher-Servlet;
-      HTTP-request#2--POST-->Dispatcher-Servlet;
-      HTTP-request#3--DELETE-->Dispatcher-Servlet;
+      HTTP-request#1--POST-->Dispatcher-Servlet;
+      HTTP-request#2--GET-->Dispatcher-Servlet;
+      HTTP-request#3--UPDATE-->Dispatcher-Servlet;
+      HTTP-request#4--DELETE-->Dispatcher-Servlet;
       Dispatcher-Servlet-->Rest-Controller;
       Rest-Controller-->Service;
       Service-->Repository;
       Repository-->DB[(DB)];
-      Dispatcher-Servlet(This is the note to the left);
 ```
 
+## The architecture of the application
 ```mermaid
   graph TD;
       HTTP-request#1 & HTTP-request#2 & HTTP-request#3--GET/POST/DELETE/OPTIONS-->Spring-Dispatcher-Servlet;
@@ -50,9 +40,38 @@ $> mvn allure:report
       HttpCodeCustomRepositoryImpl--SQL-->DB[(H2)];
 ```
 
+## List of all Endpoints
+
+
+# Dependencies
+Make sure you have installed on your operating system:<br/>
+1. [JDK. Oracle](http://www.java.com/) OR [OpenJDK](https://openjdk.java.net/)
+2. [Git](https://git-scm.com/)
+3. [Maven](https://maven.apache.org/)
+
+
+# Execution/Build
+
+## Run Spring App.
+`$> mvn spring-boot:run ` - command to start standalone application using Maven.
+
+## Run tests
+`$> mvn clean verify -Dtest.suite=before_artifact ` - it's start to execute unit/integration/mock test suite, before the building of application artifact. And generate Allure report log's</br>
+`$> mvn clean verify -Dtest.suite=after_artifact ` - it's example of the standalone E2E test, what can be in the separate repo and can be tested application after deployment in the staging environment.</br>
+
+
+## Reporting
+`$> mvn allure:report `
+If for some a reason you are not able to run tests, you can find example of the [report](./doc/allure-maven-plugin.7z) in the current project.
+
+
+
+
 
 
 # References
+* [Allure report](https://github.com/allure-framework)  An open-source framework designed to create test execution reports clear to everyone in the team.<br/>
+  > **_NOTE:_** To run the report (HTML + JS) in Firefox You need leverage the restriction by going to `about:config` url and then **uncheck** `privacy.file_unique_origin` **boolean** value.
 * [Mermaid lets you create diagrams and visualizations using text and code.](https://mermaid-js.github.io/mermaid)
 * [HTTP status codes description](https://www.restapitutorial.com/httpstatuscodes.html)
 * [Mozilla.org - HTTP status codes description](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)

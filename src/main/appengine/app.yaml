@@ -1,0 +1,16 @@
+runtime: java11
+instance_class: F1
+
+network:
+  forwarded_ports:
+    - 5000:80
+
+# Application Resources
+resources:
+  cpu: 1
+  memory_gb: 1
+  disk_size_gb: 10
+  volumes:
+    - name: ramdisk1
+      volume_type: tmpfs
+      size_gb: 0.5
