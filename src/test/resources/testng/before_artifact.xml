@@ -24,4 +24,10 @@
         </classes>
     </test>
 
+    <test name="Integration (Wire Mock).">
+        <classes>
+            <class name="core.yc.qa.test.e2e.mock.RestAssuredApiTest"/>
+        </classes>
+    </test>
+
 </suite>

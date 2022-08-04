@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "fn": {
+      "type": "string"
+    },
+    "ln": {
+      "type": "string"
+    },
+    "age": {
+      "type": "integer"
+    },
+    "ssn": {
+      "type": "string"
+    },
+    "hobbies": {
+      "type": "array",
+      "items": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "required": [
+    "fn",
+    "ln",
+    "age",
+    "ssn",
+    "hobbies"
+  ]
+}

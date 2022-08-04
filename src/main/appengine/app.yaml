@@ -1,9 +1,27 @@
-runtime: java11
+service: "default"
+
+runtime: java
 instance_class: F1
+env: "flex"
+
+runtime_config:
+  jdk: "openjdk8"
+
+handlers:
+  - url: "/.*"
+    script: "this field is required, but ignored"
+
+# Flex not support manual
+#manual_scaling:
+#  instances: 1
+
+# flex not support HC
+#health_check:
+#  enable_health_check: false
 
 network:
   forwarded_ports:
-    - 5000:80
+    - 5000/tcp
 
 # Application Resources
 resources:
@@ -14,3 +32,6 @@ resources:
     - name: ramdisk1
       volume_type: tmpfs
       size_gb: 0.5
+
+env_variables:
+  SPRING_PROFILES_ACTIVE: "prod"
