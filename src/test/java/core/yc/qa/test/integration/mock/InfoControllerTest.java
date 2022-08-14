@@ -85,14 +85,14 @@ public class InfoControllerTest extends AbstractTestNGSpringContextTests {
                 .andDo(CustomMvcResultHandlers.allureAttachment())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.app-name", is(appNameExpected)))
-                .andExpect(jsonPath("$.app-version", is(appVersionExpected)))
-                .andExpect(jsonPath("$.http-codes-size", is(777)))
+                .andExpect(jsonPath("$.app_name", is(appNameExpected)))
+                .andExpect(jsonPath("$.app_version", is(appVersionExpected)))
+                .andExpect(jsonPath("$.http_codes_size", is(777)))
 
                 .andExpect(jsonPath("$.dev", is(appDev)))
-                .andExpect(jsonPath("$.e-mail", is(devEmail)))
-                .andExpect(jsonPath("$.git-hub-url", is(githubLink)))
-                .andExpect(jsonPath("$.linkedin-url", is(linkedinLink)));
+                .andExpect(jsonPath("$.e_mail", is(devEmail)))
+                .andExpect(jsonPath("$.git_hub_url", is(githubLink)))
+                .andExpect(jsonPath("$.linkedin_url", is(linkedinLink)));
 
 
         //Assert
@@ -110,14 +110,14 @@ public class InfoControllerTest extends AbstractTestNGSpringContextTests {
                 .andDo(CustomMvcResultHandlers.allureAttachment())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(xpath("//app-name").string(appNameExpected))
-                .andExpect(xpath("//app-version").string(appVersionExpected))
-                .andExpect(xpath("//http-codes-size").string(String.valueOf(777L)))
+                .andExpect(xpath("//app_name").string(appNameExpected))
+                .andExpect(xpath("//app_version").string(appVersionExpected))
+                .andExpect(xpath("//http_codes_size").string(String.valueOf(777L)))
 
                 .andExpect(xpath("//dev").string(appDev))
-                .andExpect(xpath("//e-mail").string(devEmail))
-                .andExpect(xpath("//git-hub-url").string(githubLink))
-                .andExpect(xpath("//linkedin-url").string(linkedinLink));
+                .andExpect(xpath("//e_mail").string(devEmail))
+                .andExpect(xpath("//git_hub_url").string(githubLink))
+                .andExpect(xpath("//linkedin_url").string(linkedinLink));
 
         //Assert
         Mockito.verify(httpCodeRepository,  times(1)).count();

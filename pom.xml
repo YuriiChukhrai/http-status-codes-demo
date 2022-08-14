@@ -12,9 +12,9 @@
     <groupId>core.yc.qa</groupId>
     <artifactId>http-status-codes</artifactId>
     <version>0.0.6-SNAPSHOT</version>
-    <name>HTTP status codes demo. API</name>
+    <name>HTTP status codes demo API. Spring Boot.</name>
     <packaging>jar</packaging>
-    <description>Demo project for Portfolio. Yurii Chukhrai.</description>
+    <description>Demo project for portfolio. Yurii Chukhrai.</description>
     <url>https://github.com/YuriiChukhrai/http-status-codes-demo</url>
 
     <developers>
@@ -37,6 +37,9 @@
         <allure.maven.version>2.11.2</allure.maven.version>
 
         <maven.surefire.version>3.0.0-M3</maven.surefire.version>
+        <springfox.version>2.9.2</springfox.version>
+
+
     </properties>
 
     <dependencies>
@@ -107,6 +110,27 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
+<!--        https://springdoc.org/#getting-started-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.9</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>io.springfox</groupId>-->
+<!--            <artifactId>springfox-swagger-ui</artifactId>-->
+<!--            <version>${springfox.version}</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>io.springfox</groupId>-->
+<!--            <artifactId>springfox-swagger2</artifactId>-->
+<!--            <version>${springfox.version}</version>-->
+<!--        </dependency>-->
+
+<!--        TEST-->
 
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -246,6 +270,14 @@
                     <version>6</version>
                     <projectId>GCLOUD_CONFIG</projectId>
                     <deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
             </plugin>
 

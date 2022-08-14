@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -40,7 +41,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsIterableContaining.hasItems;
 
 @Link(name="Rest-Assured", url="https://github.com/rest-assured/rest-assured/wiki/Usage")
-public class RestAssuredApiTest {
+public class PersonTest {
 
     private final static Map<String, String> HEADERS = Collections.unmodifiableMap(new HashMap<String, String>() {
         private static final long serialVersionUID = 1L;
@@ -126,12 +127,12 @@ public class RestAssuredApiTest {
     @Epic("Epic-001")
     @TmsLink("0001")
     @Severity(SeverityLevel.NORMAL)
-    @Description("G2 landing page. HTML")
+    @Description("Landing page. HTML")
     @Features( {@Feature(TestGroups.INTEGRATION), @Feature(TestGroups.RA), @Feature(TestGroups.MOCK)} )
     @Test(groups = {TestGroups.INTEGRATION, TestGroups.RA, TestGroups.MOCK})
     public void landingPageBasicValidation() {
 
-        //Arrange
+        // Arrange
         wireMockServer.stubFor(
                 WireMock.get("/test/html/app.jsp")//https://localhost:{port_number}/test/html/app.jsp
                         .willReturn(WireMock.aResponse()
@@ -164,12 +165,12 @@ public class RestAssuredApiTest {
     @Epic("Epic-002")
     @TmsLink("0002")
     @Severity(SeverityLevel.NORMAL)
-    @Description("G2 landing page. HTML. Headers validation")
+    @Description("Landing page. HTML. Headers validation")
     @Features( {@Feature(TestGroups.INTEGRATION), @Feature(TestGroups.RA), @Feature(TestGroups.MOCK)} )
     @Test(groups = {TestGroups.INTEGRATION, TestGroups.RA, TestGroups.MOCK})
     public void landingPageTitleValidation() {
 
-        //Arrange
+        // Arrange
         wireMockServer.stubFor(
                 WireMock.get("/test/html/app.jsp")//https://localhost:{port_number}/test/html/app.jsp
                         .willReturn(WireMock.aResponse()
@@ -206,12 +207,12 @@ public class RestAssuredApiTest {
     @Epic("Epic-003")
     @TmsLink("0003")
     @Severity(SeverityLevel.NORMAL)
-    @Description("G2 landing page. JSON. Schema validation")
+    @Description("Landing page. JSON. Schema validation")
     @Features( {@Feature(TestGroups.INTEGRATION), @Feature(TestGroups.RA), @Feature(TestGroups.MOCK)} )
     @Test(groups = {TestGroups.INTEGRATION, TestGroups.RA, TestGroups.MOCK})
     public void jsonSchemaValidation() {
 
-        //Arrange
+        // Arrange
         wireMockServer.stubFor(
                 WireMock.get("/test/json/app.jsp")//https://localhost:{port_number}/test/json/app.jsp
                         .willReturn(WireMock.aResponse()
@@ -242,12 +243,12 @@ public class RestAssuredApiTest {
 
     @Epic("Epic-004")
     @TmsLink("0004")
-    @Description("G2 landing page. JSON. Path validation")
+    @Description("Landing page. JSON. Path validation")
     @Features( {@Feature(TestGroups.INTEGRATION), @Feature(TestGroups.RA), @Feature(TestGroups.MOCK)} )
     @Test(enabled = true, groups = {TestGroups.INTEGRATION, TestGroups.RA, TestGroups.MOCK})
     public void jsonPathValidation() {
 
-        //Arrange
+        // Arrange
         wireMockServer.stubFor(
                 WireMock.get("/test/json/app.jsp")//https://localhost:{port_number}/test/json/app.jsp
                         .willReturn(WireMock.aResponse()
@@ -282,12 +283,12 @@ public class RestAssuredApiTest {
 
     @Epic("Epic-005")
     @TmsLink("0005")
-    @Description("G2 landing page. XML validation")
+    @Description("Landing page. XML validation")
     @Features( {@Feature(TestGroups.INTEGRATION), @Feature(TestGroups.RA), @Feature(TestGroups.MOCK)} )
     @Test(enabled = true, groups = {TestGroups.INTEGRATION, TestGroups.RA, TestGroups.MOCK})
     public void xmlValidation() {
 
-        //Arrange
+        // Arrange
         wireMockServer.stubFor(
                 WireMock.get("/test/xml/app.jsp")//https://localhost:{port_number}/test/xml/app.jsp
                         .willReturn(WireMock.aResponse()
@@ -319,4 +320,47 @@ public class RestAssuredApiTest {
                 .body("person.ssn", equalTo("000-00-00"))
                 .body("person.hobbies.collect { it }", hasItems("hiking", "diving", "reading", "flying", "movies"));
     }
+
+    @Epic("Epic-006")
+    @TmsLink("0006")
+    @Description("Landing page. XML XSD validation")
+    @Features( {@Feature(TestGroups.INTEGRATION), @Feature(TestGroups.RA), @Feature(TestGroups.MOCK)} )
+    @Link(name = "XSD generator", value = "https://www.freeformatter.com/xsd-generator.html")
+    @Test(enabled = true, groups = {TestGroups.INTEGRATION, TestGroups.RA, TestGroups.MOCK})
+    public void xsdValidation() {
+
+        // Arrange
+        wireMockServer.stubFor(
+                WireMock.get("/ehr/test/xml/app.jsp")//https://localhost:{port_number}/ehr/test/xml/app.jsp
+                        .willReturn(WireMock.aResponse()
+                                .withStatus(HttpURLConnection.HTTP_OK)
+                                .withHeader("Content-Type", "application/xml")
+                                .withBody(XML_BODY)
+                                .withStatusMessage("OK")
+                        )
+        );
+
+        // Act
+        // Assert
+        RestAssured.given()
+                .config(config)
+                .relaxedHTTPSValidation()
+                .filter(new AllureRestAssured())
+                .request()
+                .headers(HEADERS)
+                .when()
+                .get(wireMockServer.url("/ehr/test/xml/app.jsp"))
+                .then()
+                .assertThat()
+                .contentType(ContentType.XML)
+                .statusCode(200)
+                .body(notNullValue())
+                .body(hasXPath("/Person/fn[text()='Yurii']"))
+                .body(hasXPath("/Person/ln", containsString("Chukhrai")))
+                .body("person.age", equalTo("38"))
+                .body("person.ssn", equalTo("000-00-00"))
+                .body("person.hobbies.collect { it }", hasItems("hiking", "diving", "reading", "flying", "movies"))
+                .body(matchesXsdInClasspath("./person-xml-schema.xsd"));
+    }
+
 }

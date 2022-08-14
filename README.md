@@ -65,11 +65,24 @@ Make sure you have installed on your operating system:<br/>
 If for some a reason you are not able to run tests, you can find example of the [report](./doc/allure-maven-plugin.7z) in the current project.
 
 
+# Documentation
+
+https://www.baeldung.com/spring-rest-openapi-documentation
 
 
+Swagger: http://server:port/context-path/swagger-ui.html
+OpenAPI: http://server:port/context-path/v3/api-docs
+
+Swagger: http://localhost:7777/swagger-ui/index.html
+# swagger-ui custom path
+springdoc.swagger-ui.path=/swagger-ui.html
 
 
-# References
+OpenAPI: http://localhost:7777/v3/api-docs
+# /api-docs endpoint custom path
+springdoc.api-docs.path=/api-docs
+
+## References
 * [Allure report](https://github.com/allure-framework)  An open-source framework designed to create test execution reports clear to everyone in the team.<br/>
   > **_NOTE:_** To run the report (HTML + JS) in Firefox You need leverage the restriction by going to `about:config` url and then **uncheck** `privacy.file_unique_origin` **boolean** value.
 * [Mermaid lets you create diagrams and visualizations using text and code.](https://mermaid-js.github.io/mermaid)
@@ -94,3 +107,4 @@ If for some a reason you are not able to run tests, you can find example of the 
 * [JUnit and mockito unit testing](https://medium.com/backend-habit/integrate-junit-and-mockito-unit-testing-for-service-layer-a0a5a811c58a)
 * [Project Lombok](https://projectlombok.org/)
 * [Oracle. Project Lombok](https://www.oracle.com/corporate/features/project-lombok.html)
+* [Spring Doc/OpenAPI](https://springdoc.org/#getting-started)
