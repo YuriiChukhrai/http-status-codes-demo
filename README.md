@@ -194,7 +194,7 @@ to any other DB by changing the config in settings:
 You can check/view the database when the project is running by following
 the link ( **http://localhost:{port}/h2-console** )
 
-<img src="" width="250" height="200"/></br>
+![H2 DB](./doc/pic-h2-console.png)
 **_Pic#3_**. DB - Access to the H2 console in browser
 
 
