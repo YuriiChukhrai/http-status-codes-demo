@@ -44,7 +44,8 @@ class InfoController {
                 "https://github.com/YuriiChukhrai",
                 "https://www.linkedin.com/in/yurii-c-b55aa6174",
                 "http://server:port/context-path/swagger-ui.html",
-                "http://server:port/context-path/v3/api-docs");
+                "http://server:port/context-path/v3/api-docs",
+                "http://server:port/context-path/v3/api-docs.yaml");
     }
 }
 
@@ -60,4 +61,5 @@ class InfoController {
                 String git_hub_url,
                 String linkedin_url,
                 String swagger_url,
-                String openapi_url) {}
+                String openapi_url,
+                String openapi_yaml_url) {}

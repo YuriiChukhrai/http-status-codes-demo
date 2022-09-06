@@ -4,7 +4,7 @@
 <suite name="HTTP status code. Demo." parallel="tests"
        thread-count="1" data-provider-thread-count="1">
 
-    <test name="Integration (E2E)">
+    <test name="Integration (MockMVC)">
         <classes>
             <class name="core.yc.qa.test.integration.InfoControllerTest"/>
             <class name="core.yc.qa.test.integration.HttpCodeControllerTest"/>
@@ -12,21 +12,22 @@
         </classes>
     </test>
 
-    <test name="Integration (Mock+MVC)">
+    <test name="Integration (Mockito + MockMVC)">
         <classes>
             <class name="core.yc.qa.test.integration.mock.InfoControllerTest"/>
         </classes>
     </test>
 
-    <test name="Integration (Mock)">
+    <test name="Integration (Mockito)">
         <classes>
             <class name="core.yc.qa.test.integration.mock.HttpCodeServiceImplTest"/>
         </classes>
     </test>
 
-    <test name="Integration (Wire Mock).">
+    <test name="Integration (Rest-Assured + WireMock)">
         <classes>
             <class name="core.yc.qa.test.e2e.mock.PersonTest"/>
+            <class name="core.yc.qa.test.e2e.mock.HttpStatusCodeTest"/>
         </classes>
     </test>
 

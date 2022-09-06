@@ -35,9 +35,6 @@ public class HttpStatusCodeTest {
     private final static Map<String, String> HEADERS = Collections.unmodifiableMap(new HashMap<String, String>() {
         private static final long serialVersionUID = 1L;
         {
-            //put("Content-Type", "application/json; charset=UTF-8");
-            //put("Accept", "*/*");
-
             put("Connection", "keep-alive");
             put("Cache-Control", "no-cache");
             put("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36");
@@ -166,6 +163,4 @@ public class HttpStatusCodeTest {
                 .body(notNullValue());
 
     }
-
-
 }

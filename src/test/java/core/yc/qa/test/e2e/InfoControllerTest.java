@@ -31,15 +31,13 @@ public final class InfoControllerTest extends BaseTest {
     private final String linkedinLink = "https://www.linkedin.com/in/yurii-c-b55aa6174";
     private final String endpointPath = "/api/v1/info/";
 
-
-/**
- * Demo. Bring up the Spring Boot app on build in Tomcat server.
- */
+    /**
+     * Demo. Bring up the Spring Boot app on build in Tomcat server.
+     */
     @BeforeSuite(alwaysRun = true)
     public static void beforeTestSuite(){
         SpringApplication.run(HttpStatusCodesApplication.class);
     }
-
 
     @Epic("Epic-001")
     @Severity(SeverityLevel.NORMAL)
@@ -48,29 +46,28 @@ public final class InfoControllerTest extends BaseTest {
     @Description("Get general information about application")
     @Test(groups = {TestGroups.INTEGRATION, TestGroups.E2E})
     public void getGeneralInformationJsonTest() {
-
-                RestAssured.given()
-                        .config(config)
-                        .relaxedHTTPSValidation()
-                        .filter(new AllureRestAssured())
-                        .request()
-                        .headers(HEADERS)
-                        .accept(ContentType.JSON)
-                        .port(port)
-                        .when()
-                        .get(String.format("http://%s%s", "localhost", endpointPath))
-                        .then()
-                        .assertThat()
-                        .statusCode(200)
-                        .contentType(ContentType.JSON)
-                        .body(notNullValue())
-                        .body("dev", equalTo(appDev))
-                        .body("http-codes-size", equalTo(appCodeSizeExpected))
-                        .body("git-hub-url", equalTo(githubLink))
-                        .body("e-mail", equalTo(devEmail))
-                        .body("app-name", equalTo(appNameExpected))
-                        .body("app-version", equalTo(appVersionExpected))
-                        .body("linkedin-url", equalTo(linkedinLink));
+        RestAssured.given()
+                .config(config)
+                .relaxedHTTPSValidation()
+                .filter(new AllureRestAssured())
+                .request()
+                .headers(HEADERS)
+                .accept(ContentType.JSON)
+                .port(port)
+                .when()
+                .get(String.format("http://%s%s", "localhost", endpointPath))
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .body(notNullValue())
+                .body("dev", equalTo(appDev))
+                .body("http_codes_size", equalTo(appCodeSizeExpected))
+                .body("git_hub_url", equalTo(githubLink))
+                .body("e_mail", equalTo(devEmail))
+                .body("app_name", equalTo(appNameExpected))
+                .body("app_version", equalTo(appVersionExpected))
+                .body("linkedin_url", equalTo(linkedinLink));
     }
 
     @Epic("Epic-001")
@@ -97,11 +94,11 @@ public final class InfoControllerTest extends BaseTest {
                 .contentType(ContentType.XML)
                 .body(notNullValue())
                 .body("Map.dev", equalTo(appDev))
-                .body("Map.http-codes-size", equalTo(String.valueOf(appCodeSizeExpected)))
-                .body("Map.git-hub-url", equalTo(githubLink))
-                .body("Map.e-mail", equalTo(devEmail))
-                .body("Map.app-name", equalTo(appNameExpected))
-                .body("Map.app-version", equalTo(appVersionExpected))
-                .body("Map.linkedin-url", equalTo(linkedinLink));
+                .body("Map.http_codes_size", equalTo(String.valueOf(appCodeSizeExpected)))
+                .body("Map.git_hub_url", equalTo(githubLink))
+                .body("Map.e_mail", equalTo(devEmail))
+                .body("Map.app_name", equalTo(appNameExpected))
+                .body("Map.app_version", equalTo(appVersionExpected))
+                .body("Map.linkedin_url", equalTo(linkedinLink));
     }
 }

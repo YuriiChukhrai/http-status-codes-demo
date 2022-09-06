@@ -4,7 +4,7 @@
 <suite name="HTTP status code. Demo." parallel="tests"
        thread-count="1" data-provider-thread-count="1">
 
-    <test name="Integration (E2E)">
+    <test name="Integration (E2E). Rest-Assured">
         <classes>
             <class name="core.yc.qa.test.e2e.InfoControllerTest"/>
         </classes>
