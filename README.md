@@ -343,7 +343,7 @@ Response (XXX - xxx: status code depends from input)</br>
 ![Response in Postman. XML](./doc/response-postman-xml.png)
 **_Pic#7.b_** (XML) Response of ExampleResponseController#getResponseEntityById()
 
-### 3.4 SpringDoc / OpenAPI / Swagger UI
+### 3.4 Documentation
 
 ####  3.4.1 Spring Doc / Open API
 

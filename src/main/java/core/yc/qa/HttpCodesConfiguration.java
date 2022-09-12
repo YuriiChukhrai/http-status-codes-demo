@@ -26,5 +26,6 @@ public class HttpCodesConfiguration {
                         .url("https://github.com/YuriiChukhrai/http-status-codes-demo"));
     }
 
+
     //TODO ADD reading the [openapi.json]
 }

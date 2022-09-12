@@ -28,7 +28,7 @@
     <inceptionYear>2022</inceptionYear>
 
     <properties>
-        <jdk.version>1.8</jdk.version>
+        <jdk.version>16</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <aspectj.version>1.9.7</aspectj.version>
 
@@ -47,6 +47,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <dependency>
@@ -111,26 +116,11 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-<!--        https://springdoc.org/#getting-started-->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.9</version>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-swagger-ui</artifactId>-->
-<!--            <version>${springfox.version}</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-swagger2</artifactId>-->
-<!--            <version>${springfox.version}</version>-->
-<!--        </dependency>-->
-
-<!--        TEST-->
 
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -272,26 +262,6 @@
                     <deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>16</source>
-                    <target>16</target>
-                </configuration>
-            </plugin>
-
-            <!--			<plugin>-->
-            <!--				<groupId>org.apache.maven.plugins</groupId>-->
-            <!--				<artifactId>maven-site-plugin</artifactId>-->
-            <!--				<version>3.7.1</version>-->
-            <!--			</plugin>-->
-
-            <!--			<plugin>-->
-            <!--				<groupId>org.apache.maven.plugins</groupId>-->
-            <!--				<artifactId>maven-project-info-reports-plugin</artifactId>-->
-            <!--				<version>3.0.0</version>-->
-            <!--			</plugin>-->
 
         </plugins>
     </build>
