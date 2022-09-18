@@ -4,6 +4,7 @@ import core.yc.qa.HttpStatusCodesApplication;
 import core.yc.qa.test.TestGroups;
 import core.yc.qa.test.utils.CustomMvcResultHandlers;
 import io.qameta.allure.*;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -59,8 +60,10 @@ public class InfoControllerTest extends AbstractTestNGSpringContextTests {
     @Links({@Link(url = "https://github.com/YuriiChukhrai/http-status-codes-demo/", name = "GitHub repository"), @Link(url = "https://www.linkedin.com/in/yurii-c-b55aa6174/", name = "LinkedIn")})
     @Severity(SeverityLevel.TRIVIAL)
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(groups = {TestGroups.INTEGRATION, TestGroups.MOCK, TestGroups.MVC})
-    public void getGeneralInformationTestJson() throws Exception {
+    public void getGeneralInformationTestJson() {
 
         mvc.perform(get(endpointPath).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
                 /*
@@ -87,8 +90,10 @@ public class InfoControllerTest extends AbstractTestNGSpringContextTests {
     @Links({@Link(url = "https://github.com/YuriiChukhrai/http-status-codes-demo/", name = "GitHub repository"), @Link(url = "https://www.linkedin.com/in/yurii-c-b55aa6174/", name = "LinkedIn")})
     @Severity(SeverityLevel.TRIVIAL)
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(groups = {TestGroups.INTEGRATION, TestGroups.MOCK, TestGroups.MVC})
-    public void getGeneralInformationTestXml() throws Exception {
+    public void getGeneralInformationTestXml() {
         mvc.perform(get(endpointPath).accept(MediaType.APPLICATION_XML_VALUE).contentType(MediaType.APPLICATION_XML_VALUE))
                 /*
                  * OR you can use: .andDo(print()) to printout the mvc results to console

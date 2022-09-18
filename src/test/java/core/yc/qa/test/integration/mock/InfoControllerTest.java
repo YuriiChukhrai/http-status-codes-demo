@@ -4,6 +4,7 @@ import core.yc.qa.HttpStatusCodesApplication;
 import core.yc.qa.http.codes.repositories.HttpCodeRepository;
 import core.yc.qa.http.codes.services.HttpCodeService;
 import core.yc.qa.test.utils.CustomMvcResultHandlers;
+import lombok.SneakyThrows;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 
@@ -74,8 +75,10 @@ public class InfoControllerTest extends AbstractTestNGSpringContextTests {
 
     private final String endpointPath = "/api/v1/info/";
 
+
+    @SneakyThrows
     @Test
-    public void getGeneralInformationTestJson() throws Exception {
+    public void getGeneralInformationTestJson() {
 
         //Act
         mvc.perform(get(endpointPath).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -99,8 +102,9 @@ public class InfoControllerTest extends AbstractTestNGSpringContextTests {
         Mockito.verify(httpCodeRepository).count();
     }
 
+    @SneakyThrows
     @Test(enabled = true)
-    public void getGeneralInformationTestXml() throws Exception {
+    public void getGeneralInformationTestXml() {
 
         //Act
         mvc.perform(get(endpointPath).accept(MediaType.APPLICATION_XML_VALUE).contentType(MediaType.APPLICATION_XML_VALUE))

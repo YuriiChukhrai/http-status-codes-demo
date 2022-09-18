@@ -9,6 +9,7 @@ import core.yc.qa.test.TestGroups;
 import core.yc.qa.test.utils.BaseTestUtils;
 import core.yc.qa.test.utils.CustomMvcResultHandlers;
 import io.qameta.allure.*;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -72,8 +73,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.MINOR)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dataProvider = "getHttpCodeByIdDataProvider")
-    public void getHttpCodeByIdJsonTest(Long id) throws Exception {
+    public void getHttpCodeByIdJsonTest(Long id) {
 
         mvc.perform(get(httpCodeControllerEndpointPath + String.format("/%s", id))
                         .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -103,8 +106,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.MINOR)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dataProvider = "getHttpCodeByIdDataProvider")
-    public void getHttpCodeByIdXmlTest(Long id) throws Exception {
+    public void getHttpCodeByIdXmlTest(Long id) {
 
         this.mvc.perform(get(httpCodeControllerEndpointPath + String.format("/%s", id))
                         .accept(MediaType.APPLICATION_XML_VALUE)
@@ -135,8 +140,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION)
-    public void getAllHttpCodesJsonTest() throws Exception {
+    public void getAllHttpCodesJsonTest() {
 
         mvc.perform(get(httpCodeControllerEndpointPath + "/info/all")
                         .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -168,8 +175,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION)
-    public void getAllHttpCodesXmlTest() throws Exception {
+    public void getAllHttpCodesXmlTest() {
 
         mvc.perform(get(httpCodeControllerEndpointPath + "/info/all")
                         .accept(MediaType.APPLICATION_XML_VALUE)
@@ -209,8 +218,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dataProvider = "getHttpCodeByCodeDataProvider")
-    public void getHttpCodeByCodeJsonTest(HttpCode expectedResponse) throws Exception {
+    public void getHttpCodeByCodeJsonTest(HttpCode expectedResponse) {
 
         mvc.perform(get(httpCodeControllerEndpointPath + "/info").param(QueryParams.CODE, expectedResponse.getCode().toString())
                         .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -241,8 +252,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dataProvider = "getHttpCodeByCodeDataProvider")
-    public void getHttpCodeByCodeXmlTest(HttpCode expectedResponse) throws Exception {
+    public void getHttpCodeByCodeXmlTest(HttpCode expectedResponse) {
 
         mvc.perform(get(httpCodeControllerEndpointPath + "/info").param(QueryParams.CODE, expectedResponse.getCode().toString())
                         .accept(MediaType.APPLICATION_XML_VALUE)
@@ -273,8 +286,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dataProvider = "getHttpCodeByCodeDataProvider")
-    public void findHttpCodesByCategoryJsonTest(HttpCode expectedResponse) throws Exception {
+    public void findHttpCodesByCategoryJsonTest(HttpCode expectedResponse) {
 
         mvc.perform(get(httpCodeControllerEndpointPath + "/info").param(QueryParams.CATEGORY, expectedResponse.getCategory())
                         .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -307,8 +322,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dataProvider = "getHttpCodeByCodeDataProvider")
-    public void findHttpCodesByCategoryXmlTest(HttpCode expectedResponse) throws Exception {
+    public void findHttpCodesByCategoryXmlTest(HttpCode expectedResponse) {
 
         mvc.perform(get(httpCodeControllerEndpointPath + "/info").param(QueryParams.CATEGORY, expectedResponse.getCategory())
                         .accept(MediaType.APPLICATION_XML_VALUE)
@@ -339,8 +356,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dataProvider = "getHttpCodeByCodeDataProvider")
-    public void findHttpCodeByReasonPhraseJsonTest(HttpCode expectedResponse) throws Exception {
+    public void findHttpCodeByReasonPhraseJsonTest(HttpCode expectedResponse) {
 
         mvc.perform(get(httpCodeControllerEndpointPath + "/info").param(QueryParams.REASON_PHRASE, expectedResponse.getReason_phrase())
                         .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -371,8 +390,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dataProvider = "getHttpCodeByCodeDataProvider")
-    public void findHttpCodeByReasonPhraseXmlTest(HttpCode expectedResponse) throws Exception {
+    public void findHttpCodeByReasonPhraseXmlTest(HttpCode expectedResponse) {
 
         mvc.perform(get(httpCodeControllerEndpointPath + "/info").param(QueryParams.REASON_PHRASE, expectedResponse.getReason_phrase())
                         .accept(MediaType.APPLICATION_XML_VALUE)
@@ -403,8 +424,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION)
-    public void saveHttpCodeJsonTest() throws Exception {
+    public void saveHttpCodeJsonTest() {
 
         final String fooHttpCodeJsonString = new ObjectMapper().writeValueAsString(fooHttpCodeJson);
         BaseTestUtils.attachText("Request Body.", fooHttpCodeJsonString);
@@ -452,8 +475,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION)
-    public void saveHttpCodeXmlTest() throws Exception {
+    public void saveHttpCodeXmlTest() {
 
         final String fooHttpCodeXmlString = new XmlMapper().writeValueAsString(fooHttpCodeXml);
         BaseTestUtils.attachText("Request Body.", fooHttpCodeXmlString);
@@ -501,8 +526,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dependsOnMethods="saveHttpCodeJsonTest")
-    public void putHttpCodeJsonTest() throws Exception {
+    public void putHttpCodeJsonTest() {
 
         final String fooHttpCodeJsonString = new ObjectMapper().writeValueAsString(fooHttpCodeJson.setDefinition("Call PUT"));
         BaseTestUtils.attachText("Request Body.", fooHttpCodeJsonString);
@@ -543,8 +570,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dependsOnMethods="saveHttpCodeXmlTest")
-    public void putHttpCodeXmlTest() throws Exception {
+    public void putHttpCodeXmlTest() {
 
         final String fooHttpCodeXmlString = new XmlMapper().writeValueAsString(fooHttpCodeXml.setDefinition("Call PUT"));
         BaseTestUtils.attachText("Request Body.", fooHttpCodeXmlString);
@@ -585,8 +614,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.TRIVIAL)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dependsOnMethods="putHttpCodeJsonTest")
-    public void deleteHttpCodeJsonTest() throws Exception {
+    public void deleteHttpCodeJsonTest() {
 
         mvc.perform(delete(httpCodeControllerEndpointPath + "/" + fooHttpCodeJson.getId() )
                         .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -610,8 +641,10 @@ public class HttpCodeControllerTest extends AbstractTestNGSpringContextTests {
     @Severity(SeverityLevel.TRIVIAL)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dependsOnMethods="putHttpCodeXmlTest")
-    public void deleteHttpCodeXmlTest() throws Exception {
+    public void deleteHttpCodeXmlTest() {
 
         mvc.perform(delete(httpCodeControllerEndpointPath + "/" + fooHttpCodeXml.getId() )
                         .accept(MediaType.APPLICATION_XML_VALUE)

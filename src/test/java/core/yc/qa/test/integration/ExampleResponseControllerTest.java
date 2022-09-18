@@ -7,6 +7,7 @@ import core.yc.qa.test.TestGroups;
 import core.yc.qa.test.utils.BaseTestUtils;
 import core.yc.qa.test.utils.CustomMvcResultHandlers;
 import io.qameta.allure.*;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -73,8 +74,10 @@ public class ExampleResponseControllerTest extends AbstractTestNGSpringContextTe
     @Severity(SeverityLevel.MINOR)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dataProvider = "getHttpCodeByCodeDataProvider")
-    public void getHttpCodeByCodeJsonTest(HttpCode expectedResponse) throws Exception {
+    public void getHttpCodeByCodeJsonTest(HttpCode expectedResponse) {
 
         mvc.perform(get(exampleResponseControllerEndpointPath + String.format("/%s", expectedResponse.getCode() )).accept(MediaType.APPLICATION_JSON_VALUE))
 
@@ -102,8 +105,10 @@ public class ExampleResponseControllerTest extends AbstractTestNGSpringContextTe
     @Severity(SeverityLevel.MINOR)
     @Description("Spring API. Integration tests")
     @Owner("Yurii Chukhrai")
+
+    @SneakyThrows
     @Test(enabled = true, groups = TestGroups.INTEGRATION, dataProvider = "getHttpCodeByCodeDataProvider")
-    public void getHttpCodeByIdXmlTest(HttpCode expectedResponse) throws Exception {
+    public void getHttpCodeByIdXmlTest(HttpCode expectedResponse) {
 
         final String fooHttpCodeXmlString = new XmlMapper().writeValueAsString(expectedResponse);
         BaseTestUtils.attachText("Request Body.", fooHttpCodeXmlString);

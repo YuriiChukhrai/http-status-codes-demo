@@ -1,5 +1,6 @@
 package core.yc.qa.test.utils;
 
+import lombok.SneakyThrows;
 import org.springframework.lang.Nullable;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultHandler;
@@ -29,7 +30,8 @@ public abstract class CustomMvcResultHandlers  {
     private static class AllureResultHandler implements ResultHandler {
         private AllureResultHandler() {}
 
-        public void handle(MvcResult result) throws Exception {
+        @SneakyThrows
+        public void handle(MvcResult result) {
             StringWriter stringWriter = new StringWriter();
             ResultHandler printingResultHandler = new CustomMvcResultHandlers.PrintWriterPrintingResultHandler(new PrintWriter(stringWriter));
                 printingResultHandler.handle(result);
