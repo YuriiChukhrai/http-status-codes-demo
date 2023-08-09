@@ -43,9 +43,9 @@ class InfoController {
                 "chuhray.uriy@gmail.com",
                 "https://github.com/YuriiChukhrai",
                 "https://www.linkedin.com/in/yurii-c-b55aa6174",
-                "http://server:port/context-path/swagger-ui.html",
-                "http://server:port/context-path/v3/api-docs",
-                "http://server:port/context-path/v3/api-docs.yaml");
+                "https://server:port/context-path/swagger-ui.html",
+                "https://server:port/context-path/v3/api-docs",
+                "https://server:port/context-path/v3/api-docs.yaml");
     }
 }
 

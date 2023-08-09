@@ -595,4 +595,3 @@ curl -k --location --request GET 'https://localhost:7777/api/v1/info/' \
 * [Oracle. Project Lombok](https://www.oracle.com/corporate/features/project-lombok.html)
 * [Spring Doc/OpenAPI](https://springdoc.org/#getting-started)
 * [Baeldung. HTTPS using Self-Signed](https://www.baeldung.com/spring-boot-https-self-signed-certificate)
-* [HTTPS using Self-Signed Certificate in Spring Boot](https://www.baeldung.com/spring-boot-https-self-signed-certificate)
