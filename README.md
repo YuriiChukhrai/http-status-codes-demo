@@ -1,8 +1,10 @@
 # http-status-codes
 
+
+
 ## Dependencies
 Make sure you have installed on your operating system:<br/>
-1. [JDK. Oracle](http://www.java.com/) OR [OpenJDK](https://openjdk.java.net/)
+1. [JDK. Oracle](http://www.java.com/) OR [OpenJDK](https://openjdk.java.net/) - 14+.
 2. [Git](https://git-scm.com/)
 3. [Maven](https://maven.apache.org/)
 
@@ -18,8 +20,8 @@ Make sure you have installed on your operating system:<br/>
 `$> mvn allure:report `
 If for some a reason you are not able to run tests, you can find example of the [report](./doc/allure-maven-plugin.7z) in the current project.
 
-**Swagger:** http://server:port/context-path/swagger-ui.html</br>
-**OpenAPI:** http://server:port/context-path/v3/api-docs
+**Swagger:** https://server:port/context-path/swagger-ui.html</br>
+**OpenAPI:** https://server:port/context-path/v3/api-docs
 
 ___
 
@@ -192,7 +194,7 @@ to any other DB by changing the config in settings:
 **spring.h2.console.enabled**</br>
 
 You can check/view the database when the project is running by following
-the link ( **http://localhost:{port}/h2-console** )
+the link ( **https://localhost:{port}/h2-console** )
 
 ![H2 DB](./doc/pic-h2-console.png)
 **_Pic#3_**. DB - Access to the H2 console in browser
@@ -243,9 +245,9 @@ Response (200 - OK):
   "e_mail": "chuhray.uriy@gmail.com",
   "git_hub_url": "https://github.com/YuriiChukhrai",
   "linkedin_url": "https://www.linkedin.com/in/yurii-c-b55aa6174",
-  "swagger_url": "http://server:port/context-path/swagger-ui.html",
-  "openapi_url": "http://server:port/context-path/v3/api-docs",
-  "openapi_yaml_url": "http://server:port/context-path/v3/api-docs.yaml"
+  "swagger_url": "https://server:port/context-path/swagger-ui.html",
+  "openapi_url": "https://server:port/context-path/v3/api-docs",
+  "openapi_yaml_url": "https://server:port/context-path/v3/api-docs.yaml"
 }
 ```
 
@@ -367,7 +369,7 @@ all set here.
 
 We can simply access the API documentation at:
 
-***URL (JSON):** http://localhost:7777/v3/api-docs*
+***URL (JSON):** https://localhost:7777/v3/api-docs*
 
 ![OpenAPI. JSON](./doc/springdoc_swagger-ui_open-api.png)
 **_Pic#9_**. OpenAPI documentation JSON (it's how Mozilla parse JSON by
@@ -376,7 +378,7 @@ default)
 Documentation can be available in YAML format as well, on the following
 *path: /v3/api-docs.yaml*
 
-***URL (YAML):** http://localhost:7777/v3/api-docs.yaml*
+***URL (YAML):** https://localhost:7777/v3/api-docs.yaml*
 
 ![OpenAPI. YAML](./doc/springdoc_openapi_yaml.png)
 **_Pic#10_**. OpenAPI documentation YAML
@@ -389,7 +391,7 @@ APIs. Swagger UI - renders OpenAPI specs as interactive API
 documentation. Use Swagger UI to generate interactive API documentation
 that lets your users try out the API calls directly in the browser.
 
-*URL: http://localhost:7777/swagger-ui/index.html*
+*URL: https://localhost:7777/swagger-ui/index.html*
 
 ![Swagger UI](./doc/springdoc_swagger-ui_try-it.png)
 **_Pic#11_**. Swagger UI. Endpoint information
@@ -419,7 +421,7 @@ techniques used in dynamic languages such as Ruby and Groovy.
 
 These integration tests implemented using native Spring Boot tools like:
 [**WebApplicationContext** and **MockMvc**] by using annotation for
-autowire. The test implemented for **ExampleResponseController**
+auto-wire. The test implemented for **ExampleResponseController**
 endpoints. It's you use the context include the up and running DB and
 **MockMVC** to mock server requests/responses. **MockMVC** class is part
 of Spring **MVC** test framework which helps in testing the controllers
@@ -497,10 +499,79 @@ report and triage?
 MockMvc requests)
 
 
+## V. HTTPS (TSL)
+By default, the REST endpoints use plain HTTP as transport. You can switch to HTTPS, by adding a certificate to your configuration.
+
+
+### Keystore
+We`ll create a self-signed certificate (**PKCS12** format). PKCS12: public Key Cryptographic Standards is a password protected format 
+that can contain multiple certificates and keys; it's an industry-wide used format.
+
+Generating the keystore:
+```shell
+keytool -genkeypair -alias http-code -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore http-code.p12 -validity 777
+```
+
+Example of output:
+```text
+$%> keytool -genkeypair -alias http-code -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore http-code.p12 -validity 777
+
+Enter keystore password:  
+Re-enter new password: 
+What is your first and last name?
+  [Unknown]:  Yurii Chukhrai
+What is the name of your organizational unit?
+  [Unknown]:  QA    
+What is the name of your organization?
+  [Unknown]:  YC LLC
+What is the name of your City or Locality?
+  [Unknown]:  San Mateo
+What is the name of your State or Province?
+  [Unknown]:  California
+What is the two-letter country code for this unit?
+  [Unknown]:  US
+Is CN=Yurii Chukhrai, OU=QA, O=YC LLC, L=San Mateo, ST=California, C=US correct?
+  [no]:  yes
+
+Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 777 days
+        for: CN=Yurii Chukhrai, OU=QA, O=YC LLC, L=San Mateo, ST=California, C=US
+```
+
+Then we-ll copy file named **http-code.p12**, generated in the previous step, 
+into the **http-status-codes-demo/src/main/resources/keystore/** directory.
+
+
+### Configuring SSL Properties
+```
+# Accept only HTTPS requests
+server.ssl.enabled=true
+
+# The format used for the keystore. It could be set to JKS in case it is a JKS file
+server.ssl.key-store-type=PKCS12
+
+# The path to the keystore containing the certificate
+server.ssl.key-store=classpath:keystore/http-code.p12
+
+# The password used to generate the certificate
+server.ssl.key-store-password=123456
+
+# The alias mapped to the certificate
+server.ssl.key-alias=http-code
+```
+
+
+After the running service you can check it (support of HTTPS) by using the cURL utility:
+```text
+curl -k --location --request GET 'https://localhost:7777/api/v1/info/' \
+--header 'Content-Type: application/rdf+xml' \
+--header 'Accept: application/json'
+```
+
+
 ## References
 * [Allure report](https://github.com/allure-framework)  An open-source framework designed to create test execution reports clear to everyone in the team.<br/>
   > **_NOTE:_** To run the report (HTML + JS) in Firefox You need leverage the restriction by going to `about:config` url and then **uncheck** `privacy.file_unique_origin` **boolean** value.
-* [Mermaid lets you create diagrams and visualizations using text and code.](https://mermaid-js.github.io/mermaid)
+* [Mermaid lets you create diagrams and visualizations using text and code](https://mermaid-js.github.io/mermaid)
 * [HTTP status codes description](https://www.restapitutorial.com/httpstatuscodes.html)
 * [Mozilla.org - HTTP status codes description](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
 * [Spring. Rest examples](https://spring.io/guides/tutorials/rest)
@@ -523,3 +594,5 @@ MockMvc requests)
 * [Project Lombok](https://projectlombok.org/)
 * [Oracle. Project Lombok](https://www.oracle.com/corporate/features/project-lombok.html)
 * [Spring Doc/OpenAPI](https://springdoc.org/#getting-started)
+* [Baeldung. HTTPS using Self-Signed](https://www.baeldung.com/spring-boot-https-self-signed-certificate)
+* [HTTPS using Self-Signed Certificate in Spring Boot](https://www.baeldung.com/spring-boot-https-self-signed-certificate)
