@@ -263,6 +263,82 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <from>
+<!--                    https://hub.docker.com/layers/library/openjdk/16.0-slim/images/sha256-7f7a25fa66f957b8220b476376ac784114b2739445f77d080ccb2aa58b56073d?context=explore  -->
+                        <image>openjdk:16.0-slim@sha256:7f7a25fa66f957b8220b476376ac784114b2739445f77d080ccb2aa58b56073d</image>
+                        <platforms>
+                            <platform>
+                                <architecture>amd64</architecture>
+                                <os>linux</os>
+                            </platform>
+                        </platforms>
+                    </from>
+                    <container>
+                        <creationTime>${maven.build.timestamp}</creationTime>
+                        <ports>
+                            <port>8080</port>
+                        </ports>
+                        <mainClass>
+                            core.yc.qa.HttpStatusCodesApplication
+                        </mainClass>
+                        <jvmFlags>
+                            <jvmFlag>-Dspring.profiles.active=local,prod</jvmFlag>
+                            <jvmFlag>-Xms1024m</jvmFlag>
+                            <jvmFlag>-Xmx2048m</jvmFlag>
+                        </jvmFlags>
+                        <environment>
+                            <KEYSTORE_PSW>${KEYSTORE_PSW}</KEYSTORE_PSW>
+                        </environment>
+                        <volumes>
+                            <volume>/tmp/logs</volume>
+                        </volumes>
+                    </container>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>push-custom-tag</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <to>
+                                <image>${project.artifactId}:${project.version}</image>
+                                <tags>
+                                    <tag>latest</tag>
+                                    <tag>${project.version}</tag>
+                                </tags>
+                                <platforms>
+                                    <platform>
+                                        <architecture>amd64</architecture>
+                                        <os>linux</os>
+                                    </platform>
+                                </platforms>
+                            </to>
+                        </configuration>
+                        <goals>
+                            <goal>dockerBuild</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>push-latest-tag</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <to>
+                                <image>${project.artifactId}:latest</image>
+                            </to>
+                        </configuration>
+                        <goals>
+                            <goal>dockerBuild</goal>
+                        </goals>
+                    </execution>
+
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 

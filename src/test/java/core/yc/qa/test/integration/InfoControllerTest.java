@@ -57,7 +57,7 @@ public class InfoControllerTest extends AbstractTestNGSpringContextTests {
     @Stories({@Story("Stories: CIR-001"), @Story("Stories: CIR-002")})
     @Epics({@Epic("Epic01"), @Epic("Epic02")})
     @TmsLinks({@TmsLink("025"), @TmsLink("026")})
-    @Links({@Link(url = "https://github.com/YuriiChukhrai/http-status-codes-demo/", name = "GitHub repository"), @Link(url = "https://www.linkedin.com/in/yurii-c-b55aa6174/", name = "LinkedIn")})
+    @Links({@Link(url = "https://github.com/YuriiChukhrai/http-status-codes-demo/", name = "GitHub repository"), @Link(url = "https://www.linkedin.com/in/yurii-chukhrai", name = "LinkedIn")})
     @Severity(SeverityLevel.TRIVIAL)
     @Owner("Yurii Chukhrai")
 
@@ -87,7 +87,7 @@ public class InfoControllerTest extends AbstractTestNGSpringContextTests {
     @Stories({@Story("Stories: CIR-001"), @Story("Stories: CIR-002")})
     @Epics({@Epic("Epic01"), @Epic("Epic02")})
     @TmsLinks({@TmsLink("025"), @TmsLink("026")})
-    @Links({@Link(url = "https://github.com/YuriiChukhrai/http-status-codes-demo/", name = "GitHub repository"), @Link(url = "https://www.linkedin.com/in/yurii-c-b55aa6174/", name = "LinkedIn")})
+    @Links({@Link(url = "https://github.com/YuriiChukhrai/http-status-codes-demo/", name = "GitHub repository"), @Link(url = "https://www.linkedin.com/in/yurii-chukhrai", name = "LinkedIn")})
     @Severity(SeverityLevel.TRIVIAL)
     @Owner("Yurii Chukhrai")
 

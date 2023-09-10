@@ -1,27 +1,38 @@
 # http-status-codes
 
 
-
 ## Dependencies
 Make sure you have installed on your operating system:<br/>
 1. [JDK. Oracle](http://www.java.com/) OR [OpenJDK](https://openjdk.java.net/) - 14+.
 2. [Git](https://git-scm.com/)
 3. [Maven](https://maven.apache.org/)
 
-
-## Run Spring App.
-`$> mvn spring-boot:run ` - command to start standalone application using Maven.
-
-## Run tests
+## Run tests (unit/integratiogn)
 `$> mvn clean verify -Dtest.suite=before_artifact ` - it's start to execute unit/integration/mock test suite, before the building of application artifact. And generate Allure report log's</br>
 `$> mvn clean verify -Dtest.suite=after_artifact ` - it's example of the standalone E2E test, what can be in the separate repo and can be tested application after deployment in the staging environment.</br>
+`$> mvn clean package -Dmaven.test.skip=true ` - generate the JAR artifact without running the tests</br>
+
 
 ## Reporting
 `$> mvn allure:report `
 If for some a reason you are not able to run tests, you can find example of the [report](./doc/allure-maven-plugin.7z) in the current project.
 
-**Swagger:** https://server:port/context-path/swagger-ui.html</br>
-**OpenAPI:** https://server:port/context-path/v3/api-docs
+
+## Run Application
+
+### Using Maven
+`$> mvn spring-boot:run -Dspring-boot.run.profiles=[{profile: local, dev, prod}] -DKEYSTORE_PSW={keystore password}` - command to start standalone application using Maven.
+
+OR
+
+`$> mvn spring-boot:run -Dspring-boot.run.profiles=local,prod -DKEYSTORE_PSW=123456`
+
+
+### Using JRE JAR
+
+`$> java -Dspring.profiles.active=local,prod -DKEYSTORE_PSW=123456 -jar ./target/http-status-codes.jar ` - run service.
+
+
 
 ___
 
@@ -244,7 +255,7 @@ Response (200 - OK):
   "dev": "Yurii Chukhrai",
   "e_mail": "chuhray.uriy@gmail.com",
   "git_hub_url": "https://github.com/YuriiChukhrai",
-  "linkedin_url": "https://www.linkedin.com/in/yurii-c-b55aa6174",
+  "linkedin_url": "https://www.linkedin.com/in/yurii-chukhrai",
   "swagger_url": "https://server:port/context-path/swagger-ui.html",
   "openapi_url": "https://server:port/context-path/v3/api-docs",
   "openapi_yaml_url": "https://server:port/context-path/v3/api-docs.yaml"
@@ -346,6 +357,9 @@ Response (XXX - xxx: status code depends from input)</br>
 **_Pic#7.b_** (XML) Response of ExampleResponseController#getResponseEntityById()
 
 ### 3.4 Documentation
+
+**Swagger:** https://server:port/context-path/swagger-ui.html</br>
+**OpenAPI:** https://server:port/context-path/v3/api-docs
 
 ####  3.4.1 Spring Doc / Open API
 
@@ -503,7 +517,7 @@ MockMvc requests)
 By default, the REST endpoints use plain HTTP as transport. You can switch to HTTPS, by adding a certificate to your configuration.
 
 
-### Keystore
+### 5.1 Keystore
 We`ll create a self-signed certificate (**PKCS12** format). PKCS12: public Key Cryptographic Standards is a password protected format 
 that can contain multiple certificates and keys; it's an industry-wide used format.
 
@@ -525,7 +539,7 @@ What is the name of your organizational unit?
 What is the name of your organization?
   [Unknown]:  YC LLC
 What is the name of your City or Locality?
-  [Unknown]:  San Mateo
+  [Unknown]:  San Francisco Bay Area
 What is the name of your State or Province?
   [Unknown]:  California
 What is the two-letter country code for this unit?
@@ -534,14 +548,14 @@ Is CN=Yurii Chukhrai, OU=QA, O=YC LLC, L=San Mateo, ST=California, C=US correct?
   [no]:  yes
 
 Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 777 days
-        for: CN=Yurii Chukhrai, OU=QA, O=YC LLC, L=San Mateo, ST=California, C=US
+        for: CN=Yurii Chukhrai, OU=QA, O=YC LLC, L=San Francisco Bay Area, ST=California, C=US
 ```
 
 Then we-ll copy file named **http-code.p12**, generated in the previous step, 
 into the **http-status-codes-demo/src/main/resources/keystore/** directory.
 
 
-### Configuring SSL Properties
+### 5.2 Configuring SSL Properties
 ```
 # Accept only HTTPS requests
 server.ssl.enabled=true
@@ -568,9 +582,149 @@ curl -k --location --request GET 'https://localhost:7777/api/v1/info/' \
 ```
 
 
+## VI. Health Checks
+### 6.1 Actuator
+Spring Boot Actuator module helps you monitor and manage your Spring Boot application
+by providing production-ready features like health check-up, auditing, metrics gathering,
+HTTP tracing etc. All of these features can be accessed over JMX or HTTP endpoints.
+
+*SpringBoot Actuator (Maven/pom.xml):*
+```mvn
+   <dependency>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-actuator</artifactId>
+   </dependency>
+```
+
+GET `http://localhost:7777/actuator/health`
+
+```json
+{
+    "status": "UP"
+}
+```
+
+## VII. Spring app. + Docker
+
+### 7.1 Build container
+This instruction will help you to create the Docker image and run it on the same machine. If you need to use that image on different (remote) machine
+you need follow instruction **7.2 Build tar archive**. We will not cover the case when you need to push container in your or Docker official registry - it's trivial :).
+
+For this example, we’ll provide our DockerHub credentials to **.m2/settings.xml**:
+```xml
+<servers>
+    <server>
+        <id>registry.hub.docker.com</id>
+        <username>{DockerHub Username}</username>
+        <password>{DockerHub Password}</password>
+    </server>
+</servers>
+```
+
+> **_NOTE:_** To generate and push our image to the `registry.hub.docker.com` we can use the command
+> ```shell
+> % mvn compile jib:build -DKEYSTORE_PSW=123456 -Dimage=registry.hub.docker.com/diversant/http-status-codes
+> ```
+
+
+Build Docker image and create the container
+```shell
+mvn clean compile jib:buildTar
+```
+
+
+Check the latest built image in Docker local registry
+```shell
+% docker image ls
+REPOSITORY          TAG               IMAGE ID       CREATED          SIZE
+http-status-codes   0.0.6-SNAPSHOT    b21538bd19b4   43 minutes ago   435MB
+```
+> **_NOTE:_** To remove/delete Docker image you can use command `docker rmi {image id}`.
+
+
+Create Docker container and run it
+```shell
+docker run -d --rm --name=http-status-codes -p 8080:8080 \
+-e KEYSTORE_PSW=${KEYSTORE_PSW} \
+-v /tmp/logs:/tmp/logs \
+http-status-codes:0.0.6-SNAPSHOT
+```
+> **_NOTE:_** The version of built container can be different (0.0.6-SNAPSHOT) in your case.
+
+### 7.2 Build tar archive
+Instead, to build container you can build **tar** archive of the docker image and import it on any
+other machine with Docker.
+
+
+Generate Docker **tar** archive
+```shell
+mvn clean compile jib:buildTar
+```
+this command will generate the **tar** archive of the Docker image in location `http-status-codes/target/jib-image.tar`.
+
+Example of output:
+```text
+[INFO] Containerizing application to file at '/Users/ychukhrai/OneDrive/Work/WorkSpaceS/Pluralsight/Spring/workspace/tmp/http-status-codes-demo/target/jib-image.tar'...
+[INFO] 
+[INFO] Container entrypoint set to [java, -Dspring.profiles.active=local,prod, -Xms1024m, -Xmx2048m, -cp, /app/resources:/app/classes:/app/libs/*, core.yc.qa.HttpStatusCodesApplication]
+[INFO] 
+[INFO] Built image tarball at /Users/ychukhrai/http-status-codes-demo/target/jib-image.tar
+[INFO] Executing tasks:
+[INFO] [==============================] 100.0% complete
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.981 s
+[INFO] Finished at: 2023-09-09T15:58:39-07:00
+[INFO] ------------------------------------------------------------------------
+```
+> **_NOTE:_** The **tar** archive can be copied to any location 
+> even remote machine with Docker daemon installed.
+
+Load tar image to the Docker local registry
+```shell
+docker load -i "./target/jib-image.tar"
+```
+
+Example of output:
+```text
+18acdb3e3c0d: Loading layer [==================================================>]  30.04MB/30.04MB
+3111766903c7: Loading layer [==================================================>]  1.566MB/1.566MB
+c5048ac9cf54: Loading layer [==================================================>]  179.3MB/179.3MB
+a04308c8baee: Loading layer [==================================================>]  46.78MB/46.78MB
+3e0aff0d1675: Loading layer [==================================================>]  9.691kB/9.691kB
+bf03ee2dd1c9: Loading layer [==================================================>]  22.02kB/22.02kB
+5da81747cbbd: Loading layer [==================================================>]     222B/222B
+Loaded image: http-status-codes:0.0.6-SNAPSHOT
+```
+
+The double check the image was loaded to Docker registry
+```shell
+docker image ls
+```
+
+Output
+```text
+REPOSITORY          TAG               IMAGE ID       CREATED          SIZE
+http-status-codes   0.0.6-SNAPSHOT    b21538bd19b4   18 seconds ago   435MB
+```
+
+Create/Run Docker container from loaded image
+```shell
+docker run -d --rm --name=http-status-codes -p 8080:8080 \
+-e KEYSTORE_PSW=${KEYSTORE_PSW} \
+-v /tmp/logs:/tmp/logs \
+http-status-codes:0.0.6-SNAPSHOT
+```
+
+> **_NOTE:_** The environment variable [ KEYSTORE_PSW ] should be setup in your system.
+
+
 ## References
 * [Allure report](https://github.com/allure-framework)  An open-source framework designed to create test execution reports clear to everyone in the team.<br/>
-  > **_NOTE:_** To run the report (HTML + JS) in Firefox You need leverage the restriction by going to `about:config` url and then **uncheck** `privacy.file_unique_origin` **boolean** value.
+  > **_NOTE:_** To run the report (HTML + JS) in Firefox You need leverage the restriction by going 
+  > to `about:config` url and then **uncheck** `privacy.file_unique_origin` **boolean** value.
 * [Mermaid lets you create diagrams and visualizations using text and code](https://mermaid-js.github.io/mermaid)
 * [HTTP status codes description](https://www.restapitutorial.com/httpstatuscodes.html)
 * [Mozilla.org - HTTP status codes description](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
@@ -595,3 +749,8 @@ curl -k --location --request GET 'https://localhost:7777/api/v1/info/' \
 * [Oracle. Project Lombok](https://www.oracle.com/corporate/features/project-lombok.html)
 * [Spring Doc/OpenAPI](https://springdoc.org/#getting-started)
 * [Baeldung. HTTPS using Self-Signed](https://www.baeldung.com/spring-boot-https-self-signed-certificate)
+* [Dockerizing Java Apps using Jib](https://www.baeldung.com/jib-dockerizing)
+* [jib-maven-plugin/README.md](https://github.com/GoogleContainerTools/jib/blob/master/jib-maven-plugin/README.md)
+* [GoogleContainerTools/jib](https://github.com/GoogleContainerTools/jib/blob/master/docs/faq.md)
+
+
