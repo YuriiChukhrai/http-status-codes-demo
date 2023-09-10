@@ -28,7 +28,7 @@ public final class InfoControllerTest extends BaseTest {
     private final String appDev = "Yurii Chukhrai";
     private final String devEmail = "chuhray.uriy@gmail.com";
     private final String githubLink = "https://github.com/YuriiChukhrai";
-    private final String linkedinLink = "https://www.linkedin.com/in/yurii-c-b55aa6174";
+    private final String linkedinLink = "https://www.linkedin.com/in/yurii-chukhrai";
     private final String endpointPath = "/api/v1/info/";
 
     /**

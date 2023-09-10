@@ -42,7 +42,7 @@ class InfoController {
                 "Yurii Chukhrai",
                 "chuhray.uriy@gmail.com",
                 "https://github.com/YuriiChukhrai",
-                "https://www.linkedin.com/in/yurii-c-b55aa6174",
+                "https://www.linkedin.com/in/yurii-chukhrai",
                 "https://server:port/context-path/swagger-ui.html",
                 "https://server:port/context-path/v3/api-docs",
                 "https://server:port/context-path/v3/api-docs.yaml");
