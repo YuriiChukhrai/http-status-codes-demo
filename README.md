@@ -120,7 +120,7 @@ for us. We will need Spring Boot + Maven + TestNG + Rest-Assured.
 
 
 Incoming requests will be processed in REST controllers (annotation
-**\@RestController**):
+**@RestController**):
 
 -   **InfoController** - provides general information about the project,
     the current version, and so on.
@@ -343,8 +343,8 @@ names:
 
 
 **a)** method: **ResponseEntity\<HttpCode\> getResponseEntityById**(Integer
-code) - получает статус код, ответ которого надо симулировать, тело
-ответа - справочная информация о статус коде.
+code) - receives the status code whose response should be simulated; 
+the response body contains reference information about that status code.
 
 **Request:**</br>
 GET /api/v1/http/code/example/{code}<br>
